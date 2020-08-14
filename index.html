@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>On What!?</title>
+        <h1>On What!?</h1>
+        <br>
+    </head>
+    <body>
+        <h2>Your Fishing Lures</h2>
+        <div class="form" id="myForm">
+            <form class="form-container" method='POST'>
+                <h3>Add New Lure</h3>
+                
+                <label for="Brand">Brand</label>
+                <input type="text" placeholder="Lure Brand" name="brand" required>
+                
+                <label for="model">Model</label>
+                <input type="text" placeholder="Lure Model" name="model" required>
+                
+                <label for="color">Color</label>
+                <input type="text" placeholder="Lure Color" name="color" required>
+                
+                <label for="quantity">Quantity</label>
+                <input type="text" placeholder="Lure Quantity" name="quantity" required>
+                
+                <input id="add-lure" class="add-lure" type='submit'  value='Submit'><br><br>
+            </form>
+        </div>
+        <div id="fishing-lures">
+        </div>
+    </body>
+    <script type="text/javascript" src="lureAdapter.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+</html>
