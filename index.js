@@ -1,4 +1,3 @@
-// const lureData = 'http://localhost:3000/lures'
 let lureContainer = document.getElementById('fishing-lures')
 let formContainer = document.getElementById('myForm')
 
@@ -20,13 +19,13 @@ function allTheLures(lure) {
             <p id=model><strong>Model:</strong> <span>${lure.model}</span></p>
             <p id=color><strong>Color:</span></strong> <span>${lure.color}</span></p>
             <p id=quantity><strong>Quantity:</strong> <span>${lure.quantity}</span></p> 
+        </div>
             <ul id='fish-caught-on-${lure.id}'>
             <strong>Fish Caught on this Lure:</strong><br><br>
             ${lure.fishes.map(function(fish) {return `<li id=${fish.id}>${fish.species} - ${fish.weight}</li>`}).join('')}
             </ul>
             <button id='add-fish-to-${lure.id}' class='add-fish' data-lure=${lure.id}>Add Fish</button>
             <button id='edit-button-${lure.id}' class='edit-button' data-lure=${lure.id}>Edit Lure</button>
-        </div>
     </div><br><br>
     `
 }
@@ -34,7 +33,7 @@ function allTheLures(lure) {
 // GENERATE FORMS AND ADD FISH
 
 lureContainer.addEventListener('click', function(e) {
-    e.preventDefault()
+    // e.preventDefault()
 
     if (e.target.className == 'edit-button'){
         e.target.disabled = true 
@@ -91,6 +90,8 @@ formContainer.addEventListener('submit', function(e) {
             quantity: info[3]
         }
     }
+    e.target.reset()
+    
     luresAdapter.addNewLure(lureBody)
     .then(function(lure) {
         lureContainer.innerHTML += `
@@ -115,8 +116,10 @@ formContainer.addEventListener('submit', function(e) {
 
 lureContainer.addEventListener('submit', function(e) {
     e.preventDefault()
+    debugger
     if (e.target.className == 'edit-form'){
         let lureId = e.target.dataset.lure
+        let lureInfo = document.getElementById(`lure-${lureId}-info`)
         let info = []
         e.target.querySelectorAll('input').forEach(function(input) {
             info.push(input.value)
@@ -130,16 +133,15 @@ lureContainer.addEventListener('submit', function(e) {
             }
         }
         luresAdapter.editLure(lureBody, lureId)
-        
-        let lureInfo = document.getElementById(`lure-${lureId}-info`)
-        // debugger
-        lureInfo.innerHTML = `
-        <div id=lure-${lureId}-info>
-            <p id=brand><b>Brand:</b><span>${info[0]}</span></p>
-            <p id=model><b>Model:</b><span>${info[1]}</span></p>
-            <p id=color><b>Color:</b><span>${info[2]}</span></p>
-            <p id=quantity><b>Quantity:</b><span>${info[3]}</span></p>
-        </div>`
+        .then(function(lure) {
+            lureInfo.innerHTML = `
+                <div id=lure-${lureId}-info>
+                    <p id=brand><b>Brand:</b><span>${info[0]}</span></p>
+                    <p id=model><b>Model:</b><span>${info[1]}</span></p>
+                    <p id=color><b>Color:</b><span>${info[2]}</span></p>
+                    <p id=quantity><b>Quantity:</b><span>${info[3]}</span></p>
+                </div>`
+        })
         document.getElementById(`edit-button-${lureId}`).disabled = false
     }
 
@@ -166,7 +168,7 @@ function generateForm(info) {
             <label for="quantity"><b>Quantity</b></label>
             <input type="text" name="quantity" value='${info[4]}'>
             <br>
-            <input id=edit-lure type="submit" value='Submit'>
+            <input class=edit-form type=submit value='Submit'>
         </form>
     `
 }
