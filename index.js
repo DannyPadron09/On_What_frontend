@@ -33,7 +33,6 @@ function allTheLures(lure) {
 // GENERATE FORMS AND ADD FISH
 
 lureContainer.addEventListener('click', function(e) {
-    // e.preventDefault()
 
     if (e.target.className == 'edit-button'){
         e.target.disabled = true 
@@ -46,7 +45,6 @@ lureContainer.addEventListener('click', function(e) {
     } 
 
     if (e.target.className == 'add-fish') {
-        // let lureInfo = document.getElementById(`lure-${e.target.dataset.lure}-info`)
         let info = [e.target.dataset.lure]
         let fishInfo = document.getElementById(`fish-caught-on-${info}`)
         fishInfo.innerHTML += generateFishForm(info)
